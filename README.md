@@ -1,4 +1,7 @@
-# Cronner [![Build Status](https://travis-ci.org/stekycz/Cronner.svg?branch=master)](https://travis-ci.org/stekycz/Cronner)
+# Cronner Stekycz [![Build Status](https://travis-ci.org/stekycz/Cronner.svg?branch=master)](https://travis-ci.org/stekycz/Cronner)
+ 
+# Cronner IJVo [![Build Status](https://travis-ci.org/IJVo/Cronner.svg?branch=ijvo01)](https://travis-ci.org/IJVo/Cronner)
+
 
 - [Description](#description)
 - [Usage](#usage)
