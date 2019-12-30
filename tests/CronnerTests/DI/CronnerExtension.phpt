@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @testCase
  */
@@ -16,31 +18,31 @@ use stekycz\Cronner\TimestampStorage\DummyStorage;
 use stekycz\Cronner\TimestampStorage\FileStorage;
 use Tester\Assert;
 
-require_once(__DIR__ . "/../bootstrap.php");
+require_once __DIR__ . '/../bootstrap.php';
 
 class CronnerExtensionTest extends \TestCase
 {
 
-	/**
-	 * @var Compiler
-	 */
+	/** @var Compiler */
 	private $compiler;
+
 
 	protected function setUp()
 	{
 		parent::setUp();
 		$this->compiler = new Compiler();
 		$this->compiler->addConfig([
-			'parameters' => [
-				'appDir' => __DIR__ . '/../..',
-				'wwwDir' => __DIR__ . '/../..',
-				'tempDir' => TEMP_DIR,
-				'debugMode' => FALSE,
-				'productionMode' => TRUE,
-			],
+				'parameters' => [
+						'appDir' => __DIR__ . '/../..',
+						'wwwDir' => __DIR__ . '/../..',
+						'tempDir' => TEMP_DIR,
+						'debugMode' => false,
+						'productionMode' => true,
+				],
 		]);
 		$this->compiler->addExtension('cronner', new CronnerExtension());
 	}
+
 
 	public function testDefaultConfiguration()
 	{
@@ -56,15 +58,16 @@ class CronnerExtensionTest extends \TestCase
 		Assert::same(Cronner::class, $runner->getClass());
 	}
 
+
 	public function testCompleteConfiguration()
 	{
 		$compiler = $this->compiler;
 		$compiler->addConfig([
-			'cronner' => [
-				'timestampStorage' => new Statement(DummyStorage::class),
-				'maxExecutionTime' => 120,
-				'criticalSectionTempDir' => '%tempDir%/cronner',
-			],
+				'cronner' => [
+						'timestampStorage' => new Statement(DummyStorage::class),
+						'maxExecutionTime' => 120,
+						'criticalSectionTempDir' => '%tempDir%/cronner',
+				],
 		]);
 		$compiler->compile();
 
@@ -77,12 +80,13 @@ class CronnerExtensionTest extends \TestCase
 		Assert::same(Cronner::class, $runner->getClass());
 	}
 
+
 	public function testRegisterTasks()
 	{
-		\Tester\Helpers::purge(__DIR__ . '/../../tmp/');
+		\Tester\Helpers::purge(__DIR__ . '/../../_temp/');
 
 		$config = new Configurator();
-		$config->setTempDirectory(__DIR__ . '/../../tmp/');
+		$config->setTempDirectory(__DIR__ . '/../../_temp/');
 		$config->addConfig(__DIR__ . '/../config/config.neon');
 		$container = $config->createContainer();
 
@@ -90,7 +94,6 @@ class CronnerExtensionTest extends \TestCase
 
 		Assert::same(2, count($cronner->getTasks()));
 	}
-
 }
 
-run(new CronnerExtensionTest());
+(new CronnerExtensionTest)->run();

@@ -3,4 +3,7 @@ composer.lock
 tests/*.log
 tests/coverage.xml
 tests/tmp/*
+tests/_temp/*
 !tests/tmp/.gitkeep
+coverage.*
+phpW*.ini

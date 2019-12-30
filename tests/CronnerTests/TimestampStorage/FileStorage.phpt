@@ -11,20 +11,17 @@ namespace stekycz\Cronner\tests\TimestampStorage;
 use DateTime;
 use Nette;
 use Nette\Utils\FileSystem;
-use stdClass;
-use stekycz\Cronner\Exceptions\InvalidTaskNameException;
 use stekycz\Cronner\TimestampStorage\FileStorage;
 use Tester\Assert;
 
-require_once(__DIR__ . "/../bootstrap.php");
+require_once __DIR__ . '/../bootstrap.php';
 
 class FileStorageTest extends \TestCase
 {
 
-	/**
-	 * @var FileStorage
-	 */
+	/** @var FileStorage */
 	private $storage;
+
 
 	protected function setUp()
 	{
@@ -33,40 +30,50 @@ class FileStorageTest extends \TestCase
 		$this->storage = new FileStorage(static::getTempDirPath());
 	}
 
+
 	protected function tearDown()
 	{
 		parent::tearDown();
 		FileSystem::delete(static::getTempDirPath());
 	}
 
+
 	private static function getTempDirPath()
 	{
 		return TEMP_DIR . '/cronner';
 	}
 
+
 	public function testIsAbleToSetTaskName()
 	{
+		\Tester\Environment::lock('FileStorage', __DIR__ . '/../../_temp');
+
 		$this->storage->setTaskName('Test task 1');
-		$this->storage->setTaskName(NULL);
+		$this->storage->setTaskName(null);
 		$this->storage->setTaskName();
 		Assert::$counter++; // Hack for nette tester
 	}
+
 
 	/**
 	 * @dataProvider dataProviderSetTaskName
 	 * @throws \stekycz\Cronner\Exceptions\InvalidTaskNameException
 	 */
-	public function testThrowsExceptionOnInvalidTaskName(string $taskName = NULL)
+	public function testThrowsExceptionOnInvalidTaskName(string $taskName = null)
 	{
+		\Tester\Environment::lock('FileStorage', __DIR__ . '/../../_temp');
+
 		$this->storage->setTaskName($taskName);
 	}
 
-	public function dataProviderSetTaskName() : array
+
+	public function dataProviderSetTaskName(): array
 	{
 		return [
-			[''],
+				[''],
 		];
 	}
+
 
 	/**
 	 * Tests that saving do not throws any exception.
@@ -76,6 +83,8 @@ class FileStorageTest extends \TestCase
 	 */
 	public function testLoadsAndSavesLastRunTimeWithoutErrors(DateTime $date)
 	{
+		\Tester\Environment::lock('FileStorage', __DIR__ . '/../../_temp');
+
 		$this->storage->setTaskName('Test task 1');
 
 		$lastRunTime = $this->storage->loadLastRunTime();
@@ -89,17 +98,21 @@ class FileStorageTest extends \TestCase
 		Assert::equal($date->format('Y-m-d H:i:s O'), $lastRunTime->format('Y-m-d H:i:s O'));
 	}
 
-	public function dataProviderSaveRunTime() : array
+
+	public function dataProviderSaveRunTime(): array
 	{
 		return [
-			[new Nette\Utils\DateTime('2013-01-30 17:30:00')],
-			[new Nette\Utils\DateTime('2013-01-30 18:30:01')],
-			[new Nette\Utils\DateTime('2013-01-30 18:31:01')],
+				[new Nette\Utils\DateTime('2013-01-30 17:30:00')],
+				[new Nette\Utils\DateTime('2013-01-30 18:30:01')],
+				[new Nette\Utils\DateTime('2013-01-30 18:31:01')],
 		];
 	}
 
+
 	public function testSavesLastRunTimeByTaskName()
 	{
+		\Tester\Environment::lock('FileStorage', __DIR__ . '/../../_temp');
+
 		$date = new DateTime('2013-01-30 17:30:00');
 
 		$this->storage->setTaskName('Test task 1');
@@ -124,7 +137,6 @@ class FileStorageTest extends \TestCase
 		Assert::type('\DateTime', $lastRunTime);
 		Assert::equal($date->format('Y-m-d H:i:s O'), $lastRunTime->format('Y-m-d H:i:s O'));
 	}
-
 }
 
-run(new FileStorageTest());
+(new FileStorageTest)->run();

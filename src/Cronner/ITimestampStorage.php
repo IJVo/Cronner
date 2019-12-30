@@ -9,12 +9,14 @@ use DateTimeInterface;
 interface ITimestampStorage
 {
 
+
 	/**
 	 * Sets name of current task.
 	 *
 	 * @param string|null $taskName
 	 */
-	public function setTaskName(string $taskName = NULL);
+	public function setTaskName(string $taskName = null);
+
 
 	/**
 	 * Saves current date and time as last invocation time.
@@ -23,11 +25,11 @@ interface ITimestampStorage
 	 */
 	public function saveRunTime(DateTimeInterface $now);
 
+
 	/**
 	 * Returns date and time of last cron task invocation.
 	 *
 	 * @return DateTimeInterface|null
 	 */
 	public function loadLastRunTime();
-
 }

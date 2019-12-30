@@ -15,19 +15,17 @@ use stekycz\Cronner\ITimestampStorage;
 
 class FileStorage implements ITimestampStorage
 {
+
 	use \Nette\SmartObject;
 
-	const DATETIME_FORMAT = 'Y-m-d H:i:s O';
+	public const DATETIME_FORMAT = 'Y-m-d H:i:s O';
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $directory;
 
-	/**
-	 * @var string|NULL
-	 */
-	private $taskName = NULL;
+	/** @var string|NULL */
+	private $taskName;
+
 
 	/**
 	 * @param string $directory
@@ -40,18 +38,20 @@ class FileStorage implements ITimestampStorage
 		$this->directory = $directory;
 	}
 
+
 	/**
 	 * Sets name of current task.
 	 *
 	 * @param string|null $taskName
 	 */
-	public function setTaskName(string $taskName = NULL)
+	public function setTaskName(string $taskName = null)
 	{
-		if ($taskName !== NULL && Strings::length($taskName) <= 0) {
+		if ($taskName !== null && Strings::length($taskName) <= 0) {
 			throw new InvalidTaskNameException('Given task name is not valid.');
 		}
 		$this->taskName = $taskName;
 	}
+
 
 	/**
 	 * Saves current date and time as last invocation time.
@@ -64,6 +64,7 @@ class FileStorage implements ITimestampStorage
 		file_put_contents($filepath, $now->format(self::DATETIME_FORMAT));
 	}
 
+
 	/**
 	 * Returns date and time of last cron task invocation.
 	 *
@@ -71,26 +72,26 @@ class FileStorage implements ITimestampStorage
 	 */
 	public function loadLastRunTime()
 	{
-		$date = NULL;
+		$date = null;
 		$filepath = $this->buildFilePath();
 		if (file_exists($filepath)) {
 			$date = file_get_contents($filepath);
 			$date = DateTime::createFromFormat(self::DATETIME_FORMAT, $date);
 		}
 
-		return $date ? $date : NULL;
+		return $date ?: null;
 	}
+
 
 	/**
 	 * Builds file path from directory and task name.
 	 */
-	private function buildFilePath() : string
+	private function buildFilePath(): string
 	{
-		if ($this->taskName === NULL) {
+		if ($this->taskName === null) {
 			throw new EmptyTaskNameException('Task name was not set.');
 		}
 
 		return SafeStream::PROTOCOL . '://' . $this->directory . '/' . sha1($this->taskName);
 	}
-
 }

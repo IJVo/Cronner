@@ -8,23 +8,26 @@ use Exception;
 
 class TestExceptionObject
 {
+
 	use \Nette\SmartObject;
+
 
 	/**
 	 * @cronner-task
-	 * @cronner-period 5 minutes
+	 * @cronner-period(5 minutes)
 	 */
 	public function test01()
 	{
 		throw new Exception('Test 01');
 	}
 
+
 	/**
 	 * @cronner-task
-	 * @cronner-period 5 minutes
+	 * @cronner-period(5 minutes)
 	 */
 	public function test02()
 	{
-	}
 
+	}
 }

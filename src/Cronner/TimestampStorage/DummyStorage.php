@@ -9,17 +9,20 @@ use stekycz\Cronner\ITimestampStorage;
 
 class DummyStorage implements ITimestampStorage
 {
+
 	use \Nette\SmartObject;
+
 
 	/**
 	 * Sets name of current task.
 	 *
 	 * @param string|null $taskName
 	 */
-	public function setTaskName(string $taskName = NULL)
+	public function setTaskName(string $taskName = null)
 	{
 		// Dummy
 	}
+
 
 	/**
 	 * Saves current date and time as last invocation time.
@@ -31,6 +34,7 @@ class DummyStorage implements ITimestampStorage
 		// Dummy
 	}
 
+
 	/**
 	 * Returns date and time of last cron task invocation.
 	 *
@@ -38,7 +42,6 @@ class DummyStorage implements ITimestampStorage
 	 */
 	public function loadLastRunTime()
 	{
-		return NULL; // Dummy
+		return null; // Dummy
 	}
-
 }
