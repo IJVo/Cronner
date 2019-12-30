@@ -1,6 +1,7 @@
-# Cronner Stekycz [![Build Status](https://travis-ci.org/stekycz/Cronner.svg?branch=master)](https://travis-ci.org/stekycz/Cronner)
- 
+
 # Cronner IJVo [![Build Status](https://travis-ci.org/IJVo/Cronner.svg?branch=ijvo01)](https://travis-ci.org/IJVo/Cronner)
+
+# Cronner Stekycz [![Build Status](https://travis-ci.org/stekycz/Cronner.svg?branch=master)](https://travis-ci.org/stekycz/Cronner)
 
 
 - [Description](#description)
@@ -22,7 +23,7 @@ Use brackets in Nette 3
 
 Simple tool which helps with maintenance of cron tasks.
 
-It requires **PHP >= 7.0.0** and **Nette Framework >= 2.4.0**.
+It requires **PHP >= 7.1.0** and **Nette Framework >= 3.0.0**.
 
 ## Usage
 
