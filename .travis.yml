@@ -22,7 +22,7 @@ before_script:
   - ./vendor/bin/phpstan analyze --no-progress -l 5 -c ./phpstan.neon ./
 
 script:
-  - ./vendor/bin/tester -s -p $PHP_BIN -j 32 -c ./tests/php.ini-unix ./tests/CronnerTests
+  - ./vendor/bin/tester -s -p $PHP_BIN -j 8 -c ./tests/php.ini-unix ./tests/CronnerTests
 
 after_failure:
   - 'for i in $(find ./tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done'
