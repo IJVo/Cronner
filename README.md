@@ -1,8 +1,13 @@
 
-# Cronner IJVo [![Build Status](https://travis-ci.org/IJVo/Cronner.svg?branch=ijvo01)](https://travis-ci.org/IJVo/Cronner)
+# Cronner IJVo 
+[![Build Status](https://travis-ci.org/IJVo/Cronner.svg?branch=master)](https://travis-ci.org/IJVo/Cronner)
+[![Latest stable](https://img.shields.io/packagist/v/ijvo/cronner.svg)](https://packagist.org/packages/ijvo/google)
+[![Latest Stable Version](https://poser.pugx.org/ijvo/cronner/v/stable?format=flat-square)](https://packagist.org/packages/ijvo/cronner)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://packagist.org/packages/ijvo/cronner)
+[![License-Packagist](https://img.shields.io/packagist/l/ijvo/cronner)](https://packagist.org/packages/ijvo/cronner)
 
-# Cronner Stekycz [![Build Status](https://travis-ci.org/stekycz/Cronner.svg?branch=master)](https://travis-ci.org/stekycz/Cronner)
-
+Simple tool which helps with maintenance of cron tasks. (forked from stekycz/Cronner)
+=====================================================================================
 
 - [Description](#description)
 - [Usage](#usage)
