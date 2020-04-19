@@ -1,5 +1,5 @@
 {
-	"name": "stekycz/cronner",
+	"name": "ijvo/cronner",
 	"type": "nette-addon",
 	"description": "Simple tool which helps with maintenance of cron tasks.",
 	"keywords": ["nette", "cron", "manager", "task"],
@@ -9,12 +9,16 @@
 			"name": "Martin Štekl",
 			"email": "martin.stekl@gmail.com",
 			"role": "Developer"
+		},
+		{
+			"name": "Ing. Jaroslav Vaculik -IJVo",
+			"email": "ijvo.ijvo@gmail.com",
+			"homepage": "https://ijvo.cz"
 		}
 	],
 	"support": {
-		"email": "martin.stekl@gmail.com",
-		"issues": "https://github.com/stekycz/Cronner/issues",
-		"source": "https://github.com/stekycz/Cronner"
+		"issues": "https://github.com/IJVo/Cronner/issues",
+		"source": "https://github.com/IJVo/Cronner"
 	},
 	"require": {
 		"php": ">=7.0.0",
