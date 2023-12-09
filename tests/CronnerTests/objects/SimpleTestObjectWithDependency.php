@@ -7,10 +7,13 @@ namespace stekycz\Cronner\tests\objects;
 class SimpleTestObjectWithDependency
 {
 
+	/** @var FooService */
+	private $service;
+
 
 	public function __construct(FooService $service)
 	{
-
+		$this->service = $service;
 	}
 
 

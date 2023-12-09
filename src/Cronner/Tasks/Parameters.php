@@ -18,6 +18,7 @@ final class Parameters
 	public const TASK = 'cronner-task';
 	public const PERIOD = 'cronner-period';
 	public const DAYS = 'cronner-days';
+	public const DAYS_OF_MONTH = 'cronner-days-of-month';
 	public const TIME = 'cronner-time';
 
 	/** @var array */
@@ -53,6 +54,19 @@ final class Parameters
 	{
 		if (($days = $this->values[static::DAYS]) !== null) {
 			return in_array($now->format('D'), $days, true);
+		}
+
+		return true;
+	}
+
+
+	/**
+	 * Returns true if today is allowed day of month.
+	 */
+	public function isInDayOfMonth(DateTimeInterface $now): bool
+	{
+		if (($days = $this->values[static::DAYS_OF_MONTH]) !== null) {
+			return in_array($now->format('j'), $days, true);
 		}
 
 		return true;
@@ -107,7 +121,7 @@ final class Parameters
 	/**
 	 * Parse cronner values from annotations.
 	 */
-	public static function parseParameters(MethodReflection $method): array
+	public static function parseParameters(MethodReflection $method, \DateTime $now): array
 	{
 		$taskName = null;
 		if ($method->hasAnnotation(self::TASK)) {
@@ -121,10 +135,9 @@ final class Parameters
 		$parameters = [
 				static::TASK => is_string($taskAnnotation) ? Parser::parseName($taskAnnotation) : $taskName,
 				static::PERIOD => $method->hasAnnotation(self::PERIOD) ? Parser::parsePeriod((string) $method->getAnnotation(self::PERIOD)) : null,
-				static::DAYS => $method->hasAnnotation(self::DAYS)
-				? Parser::parseDays(self::getAnnotationA(self::DAYS, $method)) : null,
-				static::TIME => $method->hasAnnotation(self::TIME)
-				? Parser::parseTimes(self::getAnnotationA(self::TIME, $method)) : null,
+				static::DAYS => $method->hasAnnotation(self::DAYS) ? Parser::parseDays(self::getAnnotationA(self::DAYS, $method)) : null,
+				static::DAYS_OF_MONTH => $method->hasAnnotation(self::DAYS_OF_MONTH) ? Parser::parseDaysOfMonth((string) $method->getAnnotation(self::DAYS_OF_MONTH), $now) : null,
+				static::TIME => $method->hasAnnotation(self::TIME) ? Parser::parseTimes(self::getAnnotationA(self::TIME, $method)) : null,
 		];
 
 		return $parameters;
@@ -133,9 +146,8 @@ final class Parameters
 
 	/**
 	 * Returns an annotation value.
-	 * @return string
 	 */
-	public static function getAnnotationA(string $name, MethodReflection $method)
+	public static function getAnnotationA(string $name, MethodReflection $method): string
 	{
 		$res = Nette\Application\UI\ComponentReflection::parseAnnotation($method, $name);
 		return implode(', ', $res);

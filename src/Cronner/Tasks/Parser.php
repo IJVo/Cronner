@@ -84,6 +84,43 @@ class Parser
 
 
 	/**
+	 * Parses allowed days om month for cron task. If annotation is invalid
+	 * throws exception.
+	 * @param string $annotation
+	 * @param \DateTime $now
+	 * @return string[]|null
+	 * @throws InvalidParameterException
+	 */
+	public static function parseDaysOfMonth(string $annotation, \DateTime $now)
+	{
+		$days = null;
+		$annotation = Strings::trim($annotation);
+		if (Strings::length($annotation)) {
+			$days = static::splitMultipleValues($annotation);
+			$days = static::expandDaysOfMonthRange($days);
+
+			$dayInMonthCount = cal_days_in_month(CAL_GREGORIAN, (int) $now->format('n'), (int) $now->format('Y'));
+
+			foreach ($days as $day) {
+				if (($day < 1 || $day > 31) || !is_numeric($day)) {
+					throw new InvalidParameterException(
+									"Given day parameter '" . $day . "' must be numeric from range 1-31."
+					);
+				}
+
+				if ($day > $dayInMonthCount) {
+					if (!in_array($dayInMonthCount, $days, true)) {
+						$days[] = $dayInMonthCount;
+					}
+				}
+			}
+		}
+
+		return $days ?: null;
+	}
+
+
+	/**
 	 * Parses allowed time ranges for cron task. If annotation is invalid
 	 * throws exception.
 	 *
@@ -170,6 +207,36 @@ class Parser
 				}
 			} else {
 				$expandedValues[] = $day;
+			}
+		}
+
+		return array_unique($expandedValues);
+	}
+
+
+	/**
+	 * Expands given day of month ranges to array.
+	 *
+	 * @param string[] $days
+	 * @return string[]
+	 */
+	private static function expandDaysOfMonthRange(array $days): array
+	{
+		$expandedValues = [];
+
+		foreach ($days as $day) {
+			if (Strings::match($day, '~^(3[01]|[12][0-9]|[1-9])\s*-\s*(3[01]|[12][0-9]|[1-9])$~u')) {
+				[$begin, $end] = Strings::split($day, '~\s*-\s*~');
+
+				for ($i = $begin; $i <= $end; $i++) {
+					if (!in_array($i, $expandedValues, true)) {
+						$expandedValues[] = $i;
+					}
+				}
+			} else {
+				if (!in_array($day, $expandedValues, true)) {
+					$expandedValues[] = $day;
+				}
 			}
 		}
 

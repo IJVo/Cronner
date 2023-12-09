@@ -1,8 +1,7 @@
 parameters:
-	projectDir: %rootDir%/../../..
-	autoload_files:
-		- %projectDir%/vendor/autoload.php
+	paths:
+		- src
+		- tests/CronnerTests
 	excludes_analyse:
-		- %projectDir%/tests/
-		- %projectDir%/vendor/
-		- %projectDir%/temp/
+		- vendor/*
+		- temp/*

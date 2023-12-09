@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace stekycz\Cronner\tests\Tasks;
 
+use DateTime;
 use stekycz\Cronner\Tasks\Parameters;
 use stekycz\Cronner\tests\objects\TestObject;
 use Tester\Assert;
@@ -42,7 +43,11 @@ class ParametersParsingTest extends \TestCase
 			return;
 		}
 
-		Assert::same($expected, Parameters::parseParameters(new \Nette\Application\UI\MethodReflection($this->object, $methodName)));
+		Assert::same($expected,
+						Parameters::parseParameters(new \Nette\Application\UI\MethodReflection($this->object, $methodName),
+										new DateTime('NOW')
+						)
+		);
 	}
 
 
@@ -54,6 +59,7 @@ class ParametersParsingTest extends \TestCase
 								Parameters::TASK => 'E-mail notifications',
 								Parameters::PERIOD => '5 minutes',
 								Parameters::DAYS => null,
+								Parameters::DAYS_OF_MONTH => null,
 								Parameters::TIME => null,
 						],
 						'test01',
@@ -63,6 +69,7 @@ class ParametersParsingTest extends \TestCase
 								Parameters::TASK => 'stekycz\Cronner\tests\objects\TestObject - test02',
 								Parameters::PERIOD => '1 hour',
 								Parameters::DAYS => ['Mon', 'Wed', 'Fri'],
+								Parameters::DAYS_OF_MONTH => null,
 								Parameters::TIME => [
 										[
 												'from' => '09:00',
@@ -81,6 +88,7 @@ class ParametersParsingTest extends \TestCase
 								Parameters::TASK => 'Test 3',
 								Parameters::PERIOD => '17 minutes',
 								Parameters::DAYS => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+								Parameters::DAYS_OF_MONTH => null,
 								Parameters::TIME => [
 										[
 												'from' => '09:00',
@@ -95,6 +103,7 @@ class ParametersParsingTest extends \TestCase
 								Parameters::TASK => 'Test 4',
 								Parameters::PERIOD => '1 day',
 								Parameters::DAYS => ['Sat', 'Sun'],
+								Parameters::DAYS_OF_MONTH => null,
 								Parameters::TIME => null,
 						],
 						'test04',
