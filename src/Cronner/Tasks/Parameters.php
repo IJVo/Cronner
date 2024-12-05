@@ -99,7 +99,7 @@ final class Parameters
 	/**
 	 * Returns true if current time is next period of invocation.
 	 */
-	public function isNextPeriod(DateTimeInterface $now, DateTimeInterface $lastRunTime = null): bool
+	public function isNextPeriod(DateTimeInterface $now, ?DateTimeInterface $lastRunTime = null): bool
 	{
 		if (
 						$lastRunTime !== null && !$lastRunTime instanceof \DateTimeImmutable && !$lastRunTime instanceof \DateTime

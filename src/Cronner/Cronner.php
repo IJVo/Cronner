@@ -103,7 +103,7 @@ class Cronner
 	 * @return Cronner
 	 * @throws InvalidArgumentException
 	 */
-	public function setMaxExecutionTime(int $maxExecutionTime = null): self
+	public function setMaxExecutionTime(?int $maxExecutionTime = null): self
 	{
 		if ($maxExecutionTime !== null && $maxExecutionTime <= 0) {
 			throw new InvalidArgumentException('Max execution time must be NULL or non negative number.');
@@ -176,7 +176,7 @@ class Cronner
 	/**
 	 * Runs all cron tasks.
 	 */
-	public function run(DateTimeInterface $now = null)
+	public function run(?DateTimeInterface $now = null)
 	{
 		if ($now === null) {
 			$now = new DateTime();

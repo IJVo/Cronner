@@ -15,7 +15,7 @@ interface ITimestampStorage
 	 *
 	 * @param string|null $taskName
 	 */
-	public function setTaskName(string $taskName = null);
+	public function setTaskName(?string $taskName = null);
 
 
 	/**

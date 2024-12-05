@@ -314,7 +314,7 @@ class Parser
 	/**
 	 * Returns True if given times includes midnight, False otherwise.
 	 */
-	private static function isTimeOverMidnight(string $from, string $to = null): bool
+	private static function isTimeOverMidnight(string $from, ?string $to = null): bool
 	{
 		return $to !== null && $to < $from;
 	}
@@ -323,7 +323,7 @@ class Parser
 	/**
 	 * Returns array structure with given times.
 	 */
-	private static function timePartsToArray(string $from, string $to = null): array
+	private static function timePartsToArray(string $from, ?string $to = null): array
 	{
 		return [
 				'from' => $from,

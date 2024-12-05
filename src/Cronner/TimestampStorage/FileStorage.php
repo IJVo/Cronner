@@ -44,7 +44,7 @@ class FileStorage implements ITimestampStorage
 	 *
 	 * @param string|null $taskName
 	 */
-	public function setTaskName(string $taskName = null)
+	public function setTaskName(?string $taskName = null)
 	{
 		if ($taskName !== null && Strings::length($taskName) <= 0) {
 			throw new InvalidTaskNameException('Given task name is not valid.');
