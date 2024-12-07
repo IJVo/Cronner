@@ -65,7 +65,7 @@ class Cronner
 	public function __construct(
 					ITimestampStorage $timestampStorage,
 					ICriticalSection $criticalSection,
-					int $maxExecutionTime = null,
+					?int $maxExecutionTime = null,
 					bool $skipFailedTask = true
 	)
 	{
